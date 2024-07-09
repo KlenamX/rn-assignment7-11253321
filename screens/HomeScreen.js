@@ -1,6 +1,7 @@
+// screens/HomeScreen.js
 import { View, Text, StyleSheet } from "react-native";
 import React from "react";
-import Header from "../components/Header";
+import Header from "../components/Header"; // Update the import path
 import OurStory from "../components/OurStory";
 import Products from "../components/Products";
 

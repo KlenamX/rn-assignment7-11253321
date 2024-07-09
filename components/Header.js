@@ -1,14 +1,19 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+// components/Header.js
+import { View, StyleSheet, TouchableOpacity, Image } from "react-native";
 import React from "react";
+import { useNavigation } from "@react-navigation/native";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-import { useNavigation } from "@react-navigation/native";
 
-export default function Header() {
+const Header = () => {
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.toggleDrawer();
+        }}
+      >
         <Image source={require("../assets/images/Menu.png")} />
       </TouchableOpacity>
       <View>
@@ -35,11 +40,10 @@ export default function Header() {
       </View>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
-    // backgroundColor: "blue",
     marginTop: 50,
     flexDirection: "row",
     justifyContent: "space-between",
@@ -54,3 +58,5 @@ const styles = StyleSheet.create({
     height: 60,
   },
 });
+
+export default Header;

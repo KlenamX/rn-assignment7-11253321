@@ -34,10 +34,10 @@ const Cart = () => {
     }
   };
 
-  const removeItem = async (id) => {
+  const removeItem = async (key) => {
     try {
-      const updatedCartItems = cartItems.filter((item) => item.id !== id);
-      setCartItems([...updatedCartItems]);
+      const updatedCartItems = cartItems.filter((item) => item.key !== key);
+      setCartItems(updatedCartItems);
       await AsyncStorage.setItem("cart", JSON.stringify(updatedCartItems));
     } catch (e) {
       console.error(e);
@@ -46,10 +46,10 @@ const Cart = () => {
 
   const calculateTotal = () => {
     return cartItems
-      .reduce(
-        (total, item) => total + parseFloat(item.price.replace("$", "")),
-        0
-      )
+      .reduce((total, item) => {
+        const price = parseFloat(item.price) || 0;
+        return total + price;
+      }, 0)
       .toFixed(2);
   };
 
@@ -74,7 +74,7 @@ const Cart = () => {
       </View>
 
       <FlatList
-        showsVerticalScrollIndicator={false}
+        // showsVerticalScrollIndicator={false}
         data={cartItems}
         renderItem={({ item }) => (
           <View style={styles.itemContainer}>
@@ -82,14 +82,14 @@ const Cart = () => {
               image={item.image}
               icon={item.icon}
               title={item.title}
-              description={item.description}
-              price={item.price}
-              removeFromCart={() => removeItem(item.id)} // Pass removeItem function
+              // description={item.description}
+              price={`$${item.price}`} // Ensure price is displayed as a string with "$" sign
+              removeFromCart={() => removeItem(item.key)} // Pass removeItem function
               cartView={true} // Indicate that this is the cart view
             />
           </View>
         )}
-        keyExtractor={(item) => item.id.toString()} // Ensure item.id is string or number
+        keyExtractor={(item) => item.key.toString()} // Ensure item.key is string or number
       />
       <View style={styles.totalContainer}>
         <View style={styles.totalRow}>

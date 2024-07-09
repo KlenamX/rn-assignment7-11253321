@@ -1,17 +1,17 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { MaterialIcons } from "@expo/vector-icons";
 
 export default function Cards({
   image,
-  icon,
   title,
   description,
   price,
   addToCart,
   product,
   removeFromCart,
-  style,
   cartView, // New prop to indicate cart view
 }) {
   const [isAdding, setIsAdding] = useState(false);
@@ -24,7 +24,7 @@ export default function Cards({
     setShowMessage(true);
     setTimeout(() => {
       setShowMessage(false);
-    }, 1000); // Hide message after 2 seconds
+    }, 1000);
   };
 
   return (
@@ -32,20 +32,23 @@ export default function Cards({
       <View
         style={[styles.imageContainer, cartView && styles.rowImageContainer]}
       >
-        <Image style={styles.image} source={image} />
+        <Image style={styles.image} source={{ uri: image }} />
         {addToCart && (
           <TouchableOpacity onPress={handleAddToCart} disabled={isAdding}>
-            <Image style={styles.icon} source={icon} />
+            <MaterialIcons
+              style={styles.icon}
+              name="add-circle-outline"
+              size={26}
+              color="orange"
+            />
           </TouchableOpacity>
         )}
       </View>
       <View style={[styles.info, cartView && styles.rowInfo]}>
-        {removeFromCart && (
+        {cartView && (
           <TouchableOpacity onPress={removeFromCart} style={styles.removeIcon}>
-            <Image
-              style={{ height: 25, width: 25 }}
-              source={require("../assets/images/remove.png")}
-            />
+            <MaterialIcons name="highlight-remove" size={28} color="red" />
+            {/* <Text style={styles.removeButtonText}>Remove</Text> */}
           </TouchableOpacity>
         )}
         <Text style={[styles.title, cartView && styles.cartTitle]}>
@@ -68,7 +71,7 @@ export default function Cards({
 const styles = StyleSheet.create({
   container: {
     width: 165,
-    position: "relative", // Added for absolute positioning of the message
+    position: "relative",
   },
   rowContainer: {
     flexDirection: "row",
@@ -84,6 +87,7 @@ const styles = StyleSheet.create({
   image: {
     height: "100%",
     width: "100%",
+    resizeMode: "contain",
   },
   icon: {
     position: "absolute",
@@ -92,8 +96,8 @@ const styles = StyleSheet.create({
   },
   removeIcon: {
     position: "absolute",
-    right: -2,
-    bottom: 5,
+    right: 0,
+    bottom: 0,
   },
   info: {
     marginTop: 15,
@@ -102,6 +106,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginLeft: 10,
     gap: 5,
+    width: 200,
   },
   title: {
     fontSize: 18,

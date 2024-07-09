@@ -1,15 +1,28 @@
 import { View, StyleSheet, FlatList } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Cards from "../components/Cards";
-import { products } from "./Database";
+// import { products } from "./Database";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import "react-native-get-random-values";
+import { v4 as uuidv4 } from "uuid";
+
+const getProduct = async () => {
+  try {
+    const result = await fetch("https://fakestoreapi.com/products/").then(
+      (response) => response.json()
+    );
+    return result;
+  } catch (err) {
+    console.log("error", err);
+  }
+};
 
 // Function to add item to cart and save it in AsyncStorage
 const addToCart = async (item) => {
   try {
     const jsonValue = await AsyncStorage.getItem("cart");
     let cart = jsonValue != null ? JSON.parse(jsonValue) : [];
-    cart.push(item);
+    cart.push({ ...item, key: uuidv4() }); // Add a unique key to each item
     await AsyncStorage.setItem("cart", JSON.stringify(cart));
     console.log("Item added to cart");
   } catch (e) {
@@ -18,25 +31,31 @@ const addToCart = async (item) => {
 };
 
 export default function Products() {
+  const [product, setProduct] = useState([]);
+  useEffect(() => {
+    getProduct("products").then((data) => {
+      setProduct(data);
+    });
+  }, []);
   return (
     <View style={styles.container}>
       <FlatList
-        showsVerticalScrollIndicator={false}
-        data={products}
+        // showsVerticalScrollIndicator={false}
+        data={product}
         renderItem={({ item }) => (
           <View style={styles.itemContainer}>
             <Cards
               image={item.image}
-              icon={item.icon}
+              // icon={require("../assets/images/add_circle.png")}
               title={item.title}
-              description={item.description}
-              price={item.price}
+              // description={item.description}
+              price={`$${item.price}`}
               addToCart={addToCart}
               product={item}
             />
           </View>
         )}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.id.toString()}
         numColumns={2}
         columnWrapperStyle={styles.row}
       />
