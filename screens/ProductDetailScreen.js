@@ -111,7 +111,7 @@ export default function ProductDetailScreen({ route }) {
           </View>
         </ScrollView>
       </View>
-      <View
+      <TouchableOpacity
         style={{
           alignItems: "center",
           flexDirection: "row",
@@ -130,7 +130,7 @@ export default function ProductDetailScreen({ route }) {
         <View>
           <AntDesign name="hearto" size={26} color="white" />
         </View>
-      </View>
+      </TouchableOpacity>
     </View>
   );
 }

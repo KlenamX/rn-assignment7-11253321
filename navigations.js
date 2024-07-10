@@ -1,4 +1,3 @@
-// navigations.js
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import {
@@ -9,19 +8,29 @@ import {
 import React from "react";
 import HomeScreen from "./screens/HomeScreen";
 import CartScreen from "./screens/CartScreen";
-import { Text, View } from "react-native";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 import ProductDetailScreen from "./screens/ProductDetailScreen";
+import AntDesign from "@expo/vector-icons/AntDesign";
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
 const CustomDrawer = (props) => {
+  const { navigation } = props;
+
+  const handleCloseDrawer = () => {
+    navigation.closeDrawer();
+  };
+
   return (
     <DrawerContentScrollView {...props}>
+      <TouchableOpacity style={{ marginLeft: 10 }} onPress={handleCloseDrawer}>
+        <AntDesign name="close" size={26} color="black" />
+      </TouchableOpacity>
       <View
         style={{
           marginLeft: 0,
-          marginBottom: 25,
+          marginVertical: 25,
           width: 150,
           alignItems: "center",
           gap: 5,
@@ -46,6 +55,15 @@ const DrawerNavigator = () => {
     <Drawer.Navigator
       screenOptions={{
         headerShown: false,
+        drawerActiveBackgroundColor: "orange",
+        drawerLabelStyle: {
+          fontSize: 18,
+          fontWeight: "500",
+          color: "black",
+        },
+        drawerItemStyle: {
+          marginVertical: 10,
+        },
       }}
       initialRouteName="Home"
       drawerContent={(props) => <CustomDrawer {...props} />}
