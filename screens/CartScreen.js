@@ -73,24 +73,27 @@ const Cart = () => {
         />
       </View>
 
-      <FlatList
-        // showsVerticalScrollIndicator={false}
-        data={cartItems}
-        renderItem={({ item }) => (
-          <View style={styles.itemContainer}>
-            <Cards
-              image={item.image}
-              icon={item.icon}
-              title={item.title}
-              // description={item.description}
-              price={`$${item.price}`} // Ensure price is displayed as a string with "$" sign
-              removeFromCart={() => removeItem(item.key)} // Pass removeItem function
-              cartView={true} // Indicate that this is the cart view
-            />
-          </View>
-        )}
-        keyExtractor={(item) => item.key.toString()} // Ensure item.key is string or number
-      />
+      <View style={{ flex: 1, paddingHorizontal: 20 }}>
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          data={cartItems}
+          renderItem={({ item }) => (
+            <View style={styles.itemContainer}>
+              <Cards
+                image={item.image}
+                icon={item.icon}
+                title={item.title}
+                description={item.description}
+                price={`$${item.price}`}
+                product={item}
+                removeFromCart={() => removeItem(item.key)}
+                cartView={true}
+              />
+            </View>
+          )}
+          keyExtractor={(item) => item.key.toString()}
+        />
+      </View>
       <View style={styles.totalContainer}>
         <View style={styles.totalRow}>
           <Text style={styles.totalText}>EST. TOTAL</Text>
@@ -107,13 +110,12 @@ const Cart = () => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 20,
     marginTop: 30,
     flex: 1,
     backgroundColor: "white",
+    position: "relative",
   },
   itemContainer: {
-    flex: 1,
     margin: 5,
   },
   header: {
@@ -121,10 +123,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
+    paddingHorizontal: 20,
   },
   left: {
     position: "absolute",
     right: 10,
+    paddingHorizontal: 20,
   },
   logo: {
     width: 100,
@@ -140,12 +144,7 @@ const styles = StyleSheet.create({
     width: 180,
     height: 50,
   },
-  totalContainer: {
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
-  },
+  totalContainer: {},
   totalRow: {
     paddingHorizontal: 20,
     height: 50,

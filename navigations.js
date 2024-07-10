@@ -10,6 +10,7 @@ import React from "react";
 import HomeScreen from "./screens/HomeScreen";
 import CartScreen from "./screens/CartScreen";
 import { Text, View } from "react-native";
+import ProductDetailScreen from "./screens/ProductDetailScreen";
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -69,6 +70,7 @@ export default function Navigations() {
       >
         <Stack.Screen name="Home" component={DrawerNavigator} />
         <Stack.Screen name="Cart" component={CartScreen} />
+        <Stack.Screen name="ProductDetail" component={ProductDetailScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

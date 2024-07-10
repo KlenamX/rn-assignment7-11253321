@@ -13,7 +13,7 @@ const getProduct = async () => {
     );
     return result;
   } catch (err) {
-    console.log("error", err);
+    console.log("Error:", err);
   }
 };
 
@@ -48,7 +48,7 @@ export default function Products() {
               image={item.image}
               // icon={require("../assets/images/add_circle.png")}
               title={item.title}
-              // description={item.description}
+              description={item.description}
               price={`$${item.price}`}
               addToCart={addToCart}
               product={item}
