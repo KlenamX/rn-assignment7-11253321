@@ -96,8 +96,8 @@ const styles = StyleSheet.create({
     width: 155,
   },
   image: {
-    height: "100%",
-    width: "100%",
+    height: 190,
+    width: 150,
     resizeMode: "contain",
   },
   icon: {

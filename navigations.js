@@ -29,14 +29,14 @@ const CustomDrawer = (props) => {
       </TouchableOpacity>
       <View
         style={{
-          marginLeft: 0,
+          marginLeft: 5,
           marginVertical: 25,
           width: 150,
           alignItems: "center",
           gap: 5,
         }}
       >
-        <Text style={{ fontSize: 19, fontWeight: "500" }}>Klenam Codes</Text>
+        <Text style={{ fontSize: 22, fontWeight: "550" }}>Klenam Codes</Text>
         <View
           style={{
             borderBottomWidth: 1,
